@@ -13,44 +13,44 @@ import static com.colobu.zkrecipe.framework.CreateClientExample.createSimple;
 
 public class TransactionExample {
 
-	public static void main(String[] args) throws Exception {
-		TestingServer server = new TestingServer();
-		CuratorFramework client = null;
-		try {
-			client = createSimple(server.getConnectString());
-			client.start();
+    public static void main(String[] args) throws Exception {
+        TestingServer server = new TestingServer();
+        CuratorFramework client = null;
+        try {
+            client = createSimple(server.getConnectString());
+            client.start();
 
-			ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(),"/a");
-			ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(),"/another/path");
-			ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(),"/yet/another/path");
+            ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(), "/a");
+            ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(), "/another/path");
+            ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(), "/yet/another/path");
 
 
-			transaction(client);
+            transaction(client);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			CloseableUtils.closeQuietly(client);
-			CloseableUtils.closeQuietly(server);
-		}
-	}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            CloseableUtils.closeQuietly(client);
+            CloseableUtils.closeQuietly(server);
+        }
+    }
 
-	public static Collection<CuratorTransactionResult> transaction(CuratorFramework client) throws Exception {
+    public static Collection<CuratorTransactionResult> transaction(CuratorFramework client) throws Exception {
 //		// this example shows how to use ZooKeeper's new transactions
 //		Collection<CuratorTransactionResult> results = client.inTransaction().create().forPath("/a/path", "some data".getBytes())
 //				.and().setData().forPath("/another/path", "other data".getBytes())
 //				.and().delete().forPath("/yet/another/path")
 //				.and().commit(); // IMPORTANT!
 
-		//inTransaction is deprecated. use transaction() instead
-		List<CuratorTransactionResult>  results = client.transaction().forOperations(
-				client.transactionOp().create().forPath("/a/path", "some data".getBytes()),
-				client.transactionOp().setData().forPath("/another/path", "other data".getBytes()),
-				client.transactionOp().delete().forPath("/yet/another/path"));
-		// called
-		for (CuratorTransactionResult result : results) {
-			System.out.println(result.getForPath() + " - " + result.getType());
-		}
-		return results;
-	}
+        //inTransaction is deprecated. use transaction() instead
+        List<CuratorTransactionResult> results = client.transaction().forOperations(
+                client.transactionOp().create().forPath("/a/path", "some data".getBytes()),
+                client.transactionOp().setData().forPath("/another/path", "other data".getBytes()),
+                client.transactionOp().delete().forPath("/yet/another/path"));
+        // called
+        for (CuratorTransactionResult result : results) {
+            System.out.println(result.getForPath() + " - " + result.getType());
+        }
+        return results;
+    }
 }
