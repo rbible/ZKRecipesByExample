@@ -43,15 +43,18 @@ public class SharedCounterExample implements SharedCountListener {
                     @Override
                     public Void call() throws Exception {
                         count.start();
-                        Thread.sleep(rand.nextInt(10000));
-                        System.out.println("Increment:" + count.trySetCount(count.getVersionedValue(),
-                                count.getCount() + rand.nextInt(10)));
+
+                        Thread.sleep(rand.nextInt(2000));
+
+                        int randomNum = rand.nextInt(10);
+                        int newCount = count.getCount() + randomNum;
+                        boolean trySetCount = count.trySetCount(count.getVersionedValue(), newCount);
+                        System.out.println("Increment:" + trySetCount + ",newCount:" + newCount);
                         return null;
                     }
                 };
                 service.submit(task);
             }
-
 
             service.shutdown();
             service.awaitTermination(10, TimeUnit.MINUTES);
@@ -61,8 +64,6 @@ public class SharedCounterExample implements SharedCountListener {
             }
             baseCount.close();
         }
-
-
     }
 
     @Override
@@ -72,7 +73,7 @@ public class SharedCounterExample implements SharedCountListener {
 
     @Override
     public void countHasChanged(SharedCountReader sharedCount, int newCount) throws Exception {
-        System.out.println("Counter's value is changed to " + newCount);
+        System.out.println("Counter's value is changed to " + newCount + " \n");
     }
 
 }

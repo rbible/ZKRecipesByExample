@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 
 public class LeaderSelectorExample {
     private static final int CLIENT_QTY = 10;
+
     private static final String PATH = "/examples/leader";
 
     public static void main(String[] args) throws Exception {

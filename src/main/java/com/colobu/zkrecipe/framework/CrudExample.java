@@ -1,9 +1,12 @@
 package com.colobu.zkrecipe.framework;
 
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
 import org.apache.curator.framework.api.CuratorListener;
+import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.test.TestingServer;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.Watcher;
 
@@ -11,7 +14,7 @@ import java.util.List;
 
 public class CrudExample {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
     }
 

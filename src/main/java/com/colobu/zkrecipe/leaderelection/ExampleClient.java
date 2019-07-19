@@ -32,9 +32,10 @@ public class ExampleClient extends LeaderSelectorListenerAdapter implements Clos
 
     @Override
     public void takeLeadership(CuratorFramework client) throws Exception {
-        final int waitSeconds = (int) (5 * Math.random()) + 1;
+        final int waitSeconds = (int) (2 * Math.random()) + 1;
         System.out.println(name + " is now the leader. Waiting " + waitSeconds + " seconds...");
         System.out.println(name + " has been leader " + leaderCount.getAndIncrement() + " time(s) before.");
+
         try {
             Thread.sleep(TimeUnit.SECONDS.toMillis(waitSeconds));
         } catch (InterruptedException e) {

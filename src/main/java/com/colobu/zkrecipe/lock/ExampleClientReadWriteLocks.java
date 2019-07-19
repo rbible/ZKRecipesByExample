@@ -35,7 +35,7 @@ public class ExampleClientReadWriteLocks {
         try {
             resource.use(); //access resource exclusively
         } finally {
-            System.out.println(clientName + " releasing the lock");
+            System.out.println(clientName + " releasing the lock \n");
             readLock.release(); // always release the lock in a finally block
             writeLock.release(); // always release the lock in a finally block
         }

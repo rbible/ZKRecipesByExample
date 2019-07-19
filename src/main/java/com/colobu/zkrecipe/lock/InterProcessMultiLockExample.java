@@ -38,12 +38,11 @@ public class InterProcessMultiLockExample {
             try {
                 resource.use(); //access resource exclusively
             } finally {
-                System.out.println("releasing the lock");
+                System.out.println("\nreleasing the lock");
                 lock.release(); // always release the lock in a finally block
             }
-            System.out.println("has the lock1: " + lock1.isAcquiredInThisProcess());
+            System.out.println("\nhas the lock1: " + lock1.isAcquiredInThisProcess());
             System.out.println("has the lock2: " + lock2.isAcquiredInThisProcess());
         }
     }
-
 }

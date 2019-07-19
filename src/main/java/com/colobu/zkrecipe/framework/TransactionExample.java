@@ -24,7 +24,6 @@ public class TransactionExample {
             ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(), "/another/path");
             ZKPaths.mkdirs(client.getZookeeperClient().getZooKeeper(), "/yet/another/path");
 
-
             transaction(client);
 
         } catch (Exception ex) {

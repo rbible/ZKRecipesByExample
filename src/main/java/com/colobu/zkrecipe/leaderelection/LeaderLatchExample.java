@@ -19,25 +19,26 @@ public class LeaderLatchExample {
     private static final String PATH = "/examples/leader";
 
     public static void main(String[] args) throws Exception {
-
         List<CuratorFramework> clients = Lists.newArrayList();
-        List<LeaderLatch> examples = Lists.newArrayList();
+        List<LeaderLatch> latchExamples = Lists.newArrayList();
+
         TestingServer server = new TestingServer();
         try {
             for (int i = 0; i < CLIENT_QTY; ++i) {
                 CuratorFramework client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
                 clients.add(client);
-                LeaderLatch example = new LeaderLatch(client, PATH, "Client #" + i);
-                examples.add(example);
-                client.start();
-                example.start();
-            }
+                LeaderLatch latchExample = new LeaderLatch(client, PATH, "Client #" + i);
+                latchExamples.add(latchExample);
 
+                client.start();
+                latchExample.start();
+
+            }
             Thread.sleep(2000);
 
             LeaderLatch currentLeader = null;
             for (int i = 0; i < CLIENT_QTY; ++i) {
-                LeaderLatch example = examples.get(i);
+                LeaderLatch example = latchExamples.get(i);
                 if (example.hasLeadership()) {
                     currentLeader = example;
                 }
@@ -45,18 +46,19 @@ public class LeaderLatchExample {
             System.out.println("current leader is " + currentLeader.getId());
             System.out.println("release the leader " + currentLeader.getId());
             currentLeader.close();
-            examples.get(0).await(2, TimeUnit.SECONDS);
-            System.out.println("Client #0 maybe is elected as the leader or not although it want to be");
-            System.out.println("the new leader is " + examples.get(0).getLeader().getId());
 
-            System.out.println("Press enter/return to quit\n");
+            latchExamples.get(0).await(2, TimeUnit.SECONDS);
+            System.out.println("Client #0 maybe is elected as the leader or not although it want to be \n");
+            System.out.println("the new leader is " + latchExamples.get(0).getLeader().getId());
+
+            System.out.println("\nPress enter/return to quit\n");
             new BufferedReader(new InputStreamReader(System.in)).readLine();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             System.out.println("Shutting down...");
-            for (LeaderLatch exampleClient : examples) {
+            for (LeaderLatch exampleClient : latchExamples) {
                 CloseableUtils.closeQuietly(exampleClient);
             }
             for (CuratorFramework client : clients) {

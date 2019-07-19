@@ -18,18 +18,18 @@ public class ExampleClientReentrantLocks {
 
     public void doWork(long time, TimeUnit unit) throws Exception {
         if (!lock.acquire(time, unit)) {
-            throw new IllegalStateException(clientName + " could not acquire the lock");
+            throw new IllegalStateException(clientName + " could not acquire the lock ");
         }
-        System.out.println(clientName + " has the lock");
+        System.out.println(clientName + " has the lock ");
         if (!lock.acquire(time, unit)) {
-            throw new IllegalStateException(clientName + " could not acquire the lock");
+            throw new IllegalStateException(clientName + " could not acquire the lock ");
         }
-        System.out.println(clientName + " has the lock again");
+        System.out.println(clientName + " has the lock again ");
 
         try {
             resource.use(); //access resource exclusively
         } finally {
-            System.out.println(clientName + " releasing the lock");
+            System.out.println(clientName + " releasing the lock \n");
             lock.release(); // always release the lock in a finally block
             lock.release(); // always release the lock in a finally block
         }

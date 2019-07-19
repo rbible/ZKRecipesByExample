@@ -144,8 +144,9 @@ public class AkinDistributedBlockingQueue<E> implements BlockingQueue<E>, QueueC
     public void put(E e) throws InterruptedException {
         try {
             getDistributedQueue().put(e);
-            if (!getDistributedQueue().flushPuts(DEFAULT_WAITTIME, TimeUnit.MILLISECONDS))
+            if (!getDistributedQueue().flushPuts(DEFAULT_WAITTIME, TimeUnit.MILLISECONDS)) {
                 throw new RuntimeException("timeout");
+            }
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

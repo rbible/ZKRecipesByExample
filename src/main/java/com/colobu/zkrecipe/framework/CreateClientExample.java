@@ -28,7 +28,6 @@ public class CreateClientExample {
             CloseableUtils.closeQuietly(client);
             CloseableUtils.closeQuietly(server);
         }
-
     }
 
     public static CuratorFramework createSimple(String connectionString) {

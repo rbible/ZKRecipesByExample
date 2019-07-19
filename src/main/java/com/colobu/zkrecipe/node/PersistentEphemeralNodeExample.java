@@ -25,11 +25,9 @@ public class PersistentEphemeralNodeExample {
         try {
             client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
             client.getConnectionStateListenable().addListener(new ConnectionStateListener() {
-
                 @Override
                 public void stateChanged(CuratorFramework client, ConnectionState newState) {
                     System.out.println("client state:" + newState.name());
-
                 }
             });
             client.start();
@@ -39,12 +37,13 @@ public class PersistentEphemeralNodeExample {
             node.start();
             node.waitForInitialCreate(3, TimeUnit.SECONDS);
             String actualPath = node.getActualPath();
-            System.out.println("node " + actualPath + " value: " + new String(client.getData().forPath(actualPath)));
+            System.out.println("node " + actualPath + " value: " + new String(client.getData().forPath(actualPath)) + "\n");
 
             client.create().forPath(PATH2, "persistent node".getBytes());
             System.out.println("node " + PATH2 + " value: " + new String(client.getData().forPath(PATH2)));
             KillSession.kill(client.getZookeeperClient().getZooKeeper());
-            System.out.println("node " + actualPath + " doesn't exist: " + (client.checkExists().forPath(actualPath) == null));
+            System.out.println("node " + actualPath + " doesn't exist: " + (client.checkExists().forPath(actualPath) == null) + ",node value:" + client.checkExists().forPath(actualPath));
+            System.out.println("node " + actualPath + " value: " + new String(client.getData().forPath(actualPath)));
             System.out.println("node " + PATH2 + " value: " + new String(client.getData().forPath(PATH2)));
 
         } catch (Exception ex) {

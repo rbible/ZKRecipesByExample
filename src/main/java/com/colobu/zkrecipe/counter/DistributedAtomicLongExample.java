@@ -47,7 +47,6 @@ public class DistributedAtomicLongExample {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                         return null;
                     }
                 };

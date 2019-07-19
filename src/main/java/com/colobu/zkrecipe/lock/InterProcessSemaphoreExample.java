@@ -25,12 +25,12 @@ public class InterProcessSemaphoreExample {
             Collection<Lease> leases = semaphore.acquire(5);
             System.out.println("get " + leases.size() + " leases");
             Lease lease = semaphore.acquire();
-            System.out.println("get another lease");
+            System.out.println("get another lease:" + new String(lease.getData()));
 
             resource.use();
 
             Collection<Lease> leases2 = semaphore.acquire(5, 10, TimeUnit.SECONDS);
-            System.out.println("Should timeout and acquire return " + leases2);
+            System.out.println("Should timeout and acquire return: " + leases2);
 
             System.out.println("return one lease");
             semaphore.returnLease(lease);
@@ -38,5 +38,4 @@ public class InterProcessSemaphoreExample {
             semaphore.returnAll(leases);
         }
     }
-
 }
