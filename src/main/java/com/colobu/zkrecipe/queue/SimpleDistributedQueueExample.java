@@ -15,7 +15,7 @@ public class SimpleDistributedQueueExample {
     public static void main(String[] args) throws Exception {
         TestingServer server = new TestingServer();
         CuratorFramework client = null;
-        SimpleDistributedQueue queue = null;
+        SimpleDistributedQueue queue;
         try {
             client = CuratorFrameworkFactory.newClient(server.getConnectString(), new ExponentialBackoffRetry(1000, 3));
             client.getCuratorListenable().addListener(new CuratorListener() {
@@ -36,9 +36,8 @@ public class SimpleDistributedQueueExample {
             }
 
             Thread.sleep(20000);
-
         } catch (Exception ex) {
-
+            ex.printStackTrace();
         } finally {
             CloseableUtils.closeQuietly(client);
             CloseableUtils.closeQuietly(server);

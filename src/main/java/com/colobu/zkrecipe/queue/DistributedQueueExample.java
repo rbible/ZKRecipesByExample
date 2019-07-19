@@ -39,7 +39,6 @@ public class DistributedQueueExample {
                 queue.put(" test-" + i);
                 Thread.sleep((long) (3 * Math.random()));
             }
-
             Thread.sleep(20000);
 
         } catch (Exception ex) {
