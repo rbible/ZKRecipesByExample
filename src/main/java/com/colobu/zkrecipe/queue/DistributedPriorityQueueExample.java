@@ -38,10 +38,9 @@ public class DistributedPriorityQueueExample {
             for (int i = 0; i < 10; i++) {
                 int priority = (int) (Math.random() * 100);
                 System.out.println("test-" + i + " priority:" + priority);
-                queue.put("test-" + i, priority);
-                Thread.sleep((long) (50 * Math.random()));
+                queue.put("test-" + i + "-" + priority, priority);
             }
-
+//            Thread.sleep((long) (50 * Math.random()));
             Thread.sleep(20000);
 
         } catch (Exception ex) {
